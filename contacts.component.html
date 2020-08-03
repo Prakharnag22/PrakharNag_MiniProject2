@@ -1,0 +1,85 @@
+<h1>Phone Book Application</h1><br><br>
+<div class="container">
+    <p style="margin-top: 10%;">
+        <Label><strong>Contacts</strong></Label> 
+        <button class="btn btn-primary" id= "addbtn" (click)="dialogBox(myModal)">+Add Contact</button><br>
+    </p>
+    <br>
+    <table>
+        <tr>
+            <td><input type="text" class="form-control" id= "search" placeholder="Search for contact" [(ngModel)]="contactSearch" #searched /></td>
+            <td><button class="btn btn-success" id="btnSearch" (click)="search(searched)">Search</button> </td>
+            <td><button class="btn btn-success" id= "addbtn" (click)="sort()" >Sort</button>
+            </td>
+
+    
+        </tr>
+        
+    </table>
+    <br><br>
+    <section>
+        <p *ngFor="let cont of contacts" (click)=update(cont,updateModal)>
+            {{cont.firstname}} {{cont.lastname}}<br>
+            {{cont.contactno}}
+            <i class="fas fa-trash-alt" (click)="delete(contact)"></i>
+        </p>
+
+    </section>
+    
+</div>
+<div class="modal" #updateModal>
+
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span class="close" (click)="close(updateModal)">&times;</span>
+        
+            <input type="text" placeholder="Enter firstname" [(ngModel)]= "contact.firstname" class="form-control" #f_name=ngModel><br>
+            <p class = "alert alert-danger" *ngIf="f_name.touched && f_name.invalid">
+                <span class="alert alert-danger" *ngIf="f_name.errors.required">First Name cannot be empty</span>
+            </p>
+            <input type="text" placeholder="Enter lastname"  [(ngModel)]= "contact.lastname"  class="form-control" #l_name=ngModel><br>
+            <p class = "alert alert-danger" *ngIf="l_name.touched && l_name.invalid">
+                <span class="alert alert-danger" *ngIf="l_name.errors.required">Last Name cannot be empty</span>
+            </p>
+            <input type="text" placeholder="Enter contact no"  [(ngModel)]= "contact.contactno"  class="form-control" #cont_no=ngModel>
+            <p class = "alert alert-danger" *ngIf="cont_no.touched && cont_no.invalid">
+                <span class="alert alert-danger" *ngIf="cont_no.errors.required">Contact number cannot be empty</span>
+            </p>
+            <button class="btn btn-primary" (click)="updateContacts(f_name,l_name,cont_no)">Update</button>
+        
+    </div>
+  
+</div>
+<div class="modal" #myModal>
+
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span class="close" (click)="close(myModal)">&times;</span>
+        <form [formGroup]="myForm">
+       
+            <input type="text" placeholder="Enter firstname" #f_name formControlName="firstname" class="form-control" required>
+            <p class = "alert alert-danger" *ngIf="firstname.touched && firstname.invalid">
+                <span class="alert alert-danger" *ngIf="firstname.errors.required">First Name cannot be empty</span>
+            </p><br>
+            <input type="text" placeholder="Enter lastname"  #l_name formControlName="lastname" class="form-control" required>
+            <p class = "alert alert-danger" *ngIf="lastname.touched && lastname.invalid">
+                <span class="alert alert-danger" *ngIf="lastname.errors.required">last Name cannot be empty</span>
+            </p><br>
+            <input type="text" placeholder="Enter contact no" #cont_no formControlName="contactno" class="form-control" required>
+            <p class = "alert alert-danger" *ngIf="contactno.touched && contactno.invalid">
+                <span class="alert alert-danger" *ngIf="contactno.errors.required">First Contact number cannot be empty</span>
+            </p>
+            <button class="btn btn-primary" (click)="add()">Create</button>
+        
+        </form>
+    </div>
+  
+</div>
+
+
+
+
+  <!-- <input type="text" placeholder="Enter firstname" [(ngModel)]= "contact.firstname" class="form-control"><br>
+            <input type="text" placeholder="Enter lastname"  [(ngModel)]= "contact.lastname"  class="form-control"><br>
+            <input type="text" placeholder="Enter contact no"  [(ngModel)]= "contact.contactno"  class="form-control">
+             -->
